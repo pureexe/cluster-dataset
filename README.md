@@ -8,6 +8,7 @@ Support rclone (for cross platform compatibitliy) and rsync (for previous linux 
 
 ### Feature to implement
 - [ ] automatic sync between local and node
+- [ ] avoid `rm` and `ls` thing for cross-platform compatibilty
 - [ ] automatic look up between node
 - [ ] raise error when conflict
 - [ ] under the hood. (Few or none of code  to edit to support
