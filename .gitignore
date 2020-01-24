@@ -4,3 +4,4 @@ dataset/
 src/cluster_dataset.egg-info/*
 
 *.pyc
+simple_test.py

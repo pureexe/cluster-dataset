@@ -4,5 +4,5 @@ class Dataset():
     def __init__(self):
         super().__init__()
     
-    def hello():
+    def hello(self):
         return 'hello'

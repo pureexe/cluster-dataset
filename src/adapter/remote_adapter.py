@@ -1,6 +1,11 @@
 from abc import ABC,abstractmethod
+from shutil import which
+
 
 class RemoteAdapter(ABC):
+    def __init__(self,executeable_name = ''):
+        self.__executeable_name = executeable_name
+        super().__init__()
     @abstractmethod
     def sync(self):
         pass
@@ -9,7 +14,6 @@ class RemoteAdapter(ABC):
     def find(self):
         pass
     
-    @abstractmethod
     def avaliable(self):
-        """ check if adapter install on this pc """
-        pass
+        return which(self.__executeable_name) is not None
+
