@@ -7,6 +7,8 @@ class Dataset():
         self.__dataset_name = dataset_name
         self.__nodes = configuration['nodes']
         self.find_local_directory()
+        if not os.path.exists(self.__local_dir):
+            os.mkdir(self.__local_dir)
 
     def find_local_directory(self):
         self.__local_dir = None
@@ -26,10 +28,6 @@ class Dataset():
         raise RuntimeError('This PC doesn\'t support any adapter')
 
     def download(self, selected_node = None):
-        # dataset already in local don't need to download
-        dataset_local_dir = os.path.join(self.__local_dir,self.__dataset_name)
-        if os.path.exists(dataset_local_dir):
-            return True
         is_downloaded = False
         adapter = self.get_adapter()
         if selected_node is None:
@@ -45,10 +43,30 @@ class Dataset():
                 raise RuntimeError('target dataset doesn\'t exist on selected node')
         return True
 
-    def get(self):
-        self.download()
+    def get_path(self):
+        # dataset already in local don't need to download
+        dataset_local_dir = os.path.join(self.__local_dir,self.__dataset_name)
+        if not os.path.exists(dataset_local_dir):
+            self.download()
         return os.path.join(self.__local_dir,self.__dataset_name)
 
-    def update_all():
-        raise NotImplementedError
+    def upload_all(self):
+        """ upload this pc into all host (in case of dataset need to update) """
+        adapter = self.get_adapter()
+        hostname = socket.gethostname()
+        for node in self.__nodes:
+            if node['hostname'] != hostname:
+                adapter(node,self.__local_dir).upload(self.__dataset_name)
 
+def get_config(directory = '/data/cluster-dataset/'):
+    """ Example config file for vll.ist """
+    output = {'nodes':[]}
+    hostname = 'v{:02d}.vll.ist'
+    address = '10.204.100.{:d}'
+    for i in range(1,5):
+        output['nodes'].append({
+            'hostname': hostname.format(i),
+            'address': address.format(110+i),
+            'directory': directory
+        })
+    return output

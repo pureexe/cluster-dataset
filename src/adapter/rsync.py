@@ -15,4 +15,10 @@ class Rsync(RemoteAdapter):
         return code == 0
 
     def upload(self,path):
-        raise NotImplementedError
+        code = subprocess.call([
+            'rsync',
+            '-av',
+            '{}'.format(self.local_directory()),
+            '{}:{}/{}'.format(self.address(), self.directory(), path)
+        ],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        return code == 0
