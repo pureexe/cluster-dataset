@@ -13,3 +13,11 @@ Support rclone (for cross platform compatibitliy) and rsync (for previous linux 
 - [ ] raise error when conflict
 - [ ] under the hood. (Few or none of code  to edit to support
 - [ ] unit testing support
+
+## PreRequirement
+
+### Windows
+
+- Download [Rclone](https://rclone.org/downloads/) Windows prebuilt
+- Extract prebuilt files on your computer. I recommend to extract files at `%APPDATA%/rclone` to avoid permission problems.
+- add rclone to `PATH` in environment variable. It's will make this library see rclone
