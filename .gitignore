@@ -1,7 +1,7 @@
 .vscode/
 .pytest_cache/
 dataset/
-src/cluster_dataset.egg-info/*
+cluster_dataset.egg-info/
 
 *.pyc
-simple_test*
+

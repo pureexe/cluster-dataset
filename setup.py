@@ -1,3 +1,22 @@
-from setuptools import setup, find_packages
+import setuptools
 
-setup(name="cluster-dataset",   packages=find_packages('src'), package_dir={'': 'src'})
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    name="cluster-dataset",
+    version="0.1.0",
+    author="Pakkapon Phongthawee",
+    author_email="pakkapon.p_s19@vistec.ac.th",
+    description="annoy to copy data from your computer to a lot of computing engines when you are doing data science? try cluster-dataset",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/pureexe/cluster-dataset",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires='>=3.6'
+)
