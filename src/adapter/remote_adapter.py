@@ -15,5 +15,6 @@ class RemoteAdapter(ABC):
         pass
     
     def avaliable(self):
+        """ check if remote sync program (rclone/rsync/etc) avaliable on this pc"""
         return which(self.__executeable_name) is not None
 

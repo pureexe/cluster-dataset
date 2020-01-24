@@ -1,28 +1,29 @@
 NODE_INFO = {
     'nodes': [
         {
-            'name': 'v1',
-            'ip': '10.204.100.111',
+            'hostname': 'v1',
+            'address': '10.204.100.111',
             'directory': '/data/cluster-dataset'
         },
         {
-            'name': 'v2',
-            'ip': '10.204.100.112',
+            'hostname': 'v2',
+            'address': '10.204.100.112',
             'directory': '/data/cluster-dataset'
         },
         {
-            'name': 'v3',
-            'ip': '10.204.100.113',
+            'hostname': 'v3',
+            'address': '10.204.100.113',
             'directory': '/data/cluster-dataset'
         },
         {
-            'name': 'v4',
-            'ip': '10.204.100.113',
+            'hostname': 'v4',
+            'address': '10.204.100.113',
             'directory': '/data/cluster-dataset'
         },
-    ],
-    'local': {
-        'directory': 'dataset'
-        
-    }
+        {
+            'hostname': 'Pakkapon-OMEN',
+            'address': '10.204.226.253',
+            'directory': 'database'
+        }
+    ]
 }
