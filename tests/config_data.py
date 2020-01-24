@@ -3,27 +3,27 @@ NODE_INFO = {
         {
             'hostname': 'v1',
             'address': '10.204.100.111',
-            'directory': '/data/cluster-dataset'
+            'directory': '/home/pakkapon'
         },
         {
             'hostname': 'v2',
             'address': '10.204.100.112',
-            'directory': '/data/cluster-dataset'
+            'directory': '/home/pakkapon'
         },
         {
             'hostname': 'v3',
             'address': '10.204.100.113',
-            'directory': '/data/cluster-dataset'
+            'directory': '/home/pakkapon'
         },
         {
             'hostname': 'v4',
-            'address': '10.204.100.113',
-            'directory': '/data/cluster-dataset'
+            'address': '10.204.100.114',
+            'directory': '/home/pakkapon'
         },
         {
             'hostname': 'Pakkapon-OMEN',
             'address': '10.204.226.253',
-            'directory': 'database'
+            'directory': '/mnt/d/Github/cluster-dataset/dataset'
         }
     ]
 }

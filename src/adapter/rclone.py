@@ -5,4 +5,7 @@ class Rclone(RemoteAdapter):
         super().__init__('rclone',node_info,local_dir) 
 
     def download(self,path):
-        pass
+        raise NotImplementedError
+    
+    def upload(self,path):
+        raise NotImplementedError

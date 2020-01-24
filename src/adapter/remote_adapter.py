@@ -13,6 +13,11 @@ class RemoteAdapter(ABC):
     def download(self,path):
         """ download from remote"""
         pass
+    
+    @abstractmethod
+    def upload(self,path):
+        """ upload to remote"""
+        pass
         
     def avaliable(self):
         """ check if remote sync program (rclone/rsync/etc) avaliable on this pc"""
