@@ -1,5 +1,5 @@
 # cluster-dataset
-[![Build Status](https://travis-ci.org/pureexe/cluster-dataset.svg?branch=master)](https://travis-ci.org/pureexe/experiment-collector) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) 
+[![Build Status](https://travis-ci.org/pureexe/cluster-dataset.svg?branch=master)](https://travis-ci.org/pureexe/cluster-dataset) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) 
 
 annoy to copy data from your computer to a lot of computing engines when you are doing data science? try cluster-dataset
 
