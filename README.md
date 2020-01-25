@@ -12,7 +12,7 @@ pip install git+https://github.com/pureexe/cluster-dataset
 
 ## Usage
 
-#### 1. write config.
+#### 1. write config
 
 you store your conflg in other file and load when you need the dataset
 
@@ -40,7 +40,7 @@ it's time to get your dataset. you won't be headache about find and download dat
 
 ```python
 from cluster_dataset import Dataset
-dataset = Dataset('tororo',CONFIG) # change totoro to your dataset naem
+dataset = Dataset('tororo',CONFIG) # change totoro to your dataset name
 path = dataset.get_path() # the cluster set will search every node then download to your pc and return path the dataset
 ```
 
