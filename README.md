@@ -41,7 +41,7 @@ it's time to get your dataset. you won't be headache about find and download dat
 ```python
 from cluster_dataset import Dataset
 dataset = Dataset('tororo',CONFIG) # change totoro to your dataset name
-path = dataset.get_path() # the cluster set will search every node then download to your pc and return path the dataset
+path = dataset.get_path() # the cluster_dataset will search every node then download to your pc and return local path of the dataset
 ```
 
 You can look into example usage at [example_get_totoro_dataset.py](https://github.com/pureexe/cluster-dataset/blob/master/examples/example_get_totoro_dataset.py)
