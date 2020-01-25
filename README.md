@@ -61,7 +61,7 @@ I recommend to set start up type to automatic for Windows server or automatic (d
 
 
 ## My Cluster don't support rsync and scp
-If your dataset is in the place that doesn't support rsync and scp. You have to use other protocol such as, [WebDAV](https://en.wikipedia.org/wiki/WebDAV), [SMB](https://en.wikipedia.org/wiki/Server_Message_Block), [XDCC](https://en.wikipedia.org/wiki/XDCC) or your dataset is in commerial cloud service such as [Google Cloud Storage](https://cloud.google.com/storage/), [Amazon AWS S3](https://aws.amazon.com/s3/), [Alibaba OSS](https://www.alibabacloud.com/product/oss) You have to implement own adapater.
+If your dataset is in the place that doesn't support rsync and scp. You can use other protocol such as, [WebDAV](https://en.wikipedia.org/wiki/WebDAV), [SMB](https://en.wikipedia.org/wiki/Server_Message_Block), [XDCC](https://en.wikipedia.org/wiki/XDCC) by implement your own adapater.  Especially, When your dataset is in commerial cloud service such as [Google Cloud Storage](https://cloud.google.com/storage/), [Amazon AWS S3](https://aws.amazon.com/s3/), [Alibaba OSS](https://www.alibabacloud.com/product/oss) which use company specific protrocal.
 
 ### Implement own adapter
 To write own adapter, You need to use `RemoteAdapter` as base class. and You have to provide 3 method with is `__init__`, `upload` and `download`. 
