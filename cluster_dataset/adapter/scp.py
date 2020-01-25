@@ -8,6 +8,7 @@ class Scp(RemoteAdapter):
     def download(self,path):        
         code = subprocess.call([
             'scp',
+            '-r',
             '{}:{}/{}'.format(self.address(), self.directory(), path),
             '{}'.format(self.local_directory())
         ],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
@@ -16,6 +17,7 @@ class Scp(RemoteAdapter):
     def upload(self,path):
         code = subprocess.call([
             'scp',
+            '-r',
             '{}'.format(self.local_directory()),
             '{}:{}/{}'.format(self.address(), self.directory(), path)
         ],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)

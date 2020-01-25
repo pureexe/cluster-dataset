@@ -1,4 +1,4 @@
-from .adapter import rclone, rsync
+from .adapter import rclone, rsync, scp
 import socket, os
 
 class Dataset():
@@ -6,9 +6,11 @@ class Dataset():
         super().__init__()
         self.__dataset_name = dataset_name
         self.__nodes = configuration['nodes']
+        self.__avaliable_adapter = {}
         self.find_local_directory()
         if not os.path.exists(self.__local_dir):
             os.mkdir(self.__local_dir)
+        self.check_avalible_adapter()
 
     def find_local_directory(self):
         self.__local_dir = None
@@ -19,29 +21,43 @@ class Dataset():
             raise RuntimeError('please provide hostname of this pc in configuration')
         self.__local_dir = local_nodes[0]['directory']
 
-    def get_adapter(self):
-        node = self.__nodes[0]
-        if rclone.Rclone(self.__nodes[0],self.__local_dir).avaliable():
-            return rclone.Rclone
-        if rsync.Rsync(self.__nodes[0],self.__local_dir).avaliable():
-            return rsync.Rsync
-        raise RuntimeError('This PC doesn\'t support any adapter')
+    def check_avalible_adapter(self):
+        if rsync.Rsync(None,None).avaliable():
+            self.__avaliable_adapter['rsync'] = rsync.Rsync
+        if rclone.Rclone(None,None).avaliable():
+            self.__avaliable_adapter['rclone'] = rclone.Rclone
+        if scp.Scp(None,None).avaliable():
+            self.__avaliable_adapter['scp'] = scp.Scp
+    
+    def add_adapter(self, name, adpater):
+        self__avaliable_adapter[name] = adpater
+
+
+    def get_adapter(self,node):
+        if 'adapter' in node:
+            if not node['adapter'] in self.__avaliable_adapter:
+                raise RuntimeError('This PC doesn\'t support {} adapter'.format(node['adapter']))
+            return self.__avaliable_adapter[node['adapter']]
+        else:
+            # currently we use rsync as default adapter
+            if not 'rsync' in self.__avaliable_adapter:
+                raise RuntimeError('This PC doesn\'t support rsync adapter')
 
     def download(self, selected_node = None):
         is_downloaded = False
-        adapter = self.get_adapter()
         if selected_node is None:
             for node in self.__nodes:
+                adapter = self.get_adapter(node)
                 is_downloaded = adapter(node,self.__local_dir).download(self.__dataset_name)
                 if is_downloaded:
                     break
             if not is_downloaded:
                 raise RuntimeError('target dataset doesn\'t exist on any node')
         else:
+            adapter = self.get_adapter(selected_node)
             is_downloaded = adapter(selected_node,self.__local_dir).download(self.__dataset_name)
             if not is_downloaded:
                 raise RuntimeError('target dataset doesn\'t exist on selected node')
-        return True
 
     def get_path(self):
         # dataset already in local don't need to download
@@ -67,6 +83,6 @@ def get_config(directory = '/data/cluster-dataset/'):
         output['nodes'].append({
             'hostname': hostname.format(i),
             'address': address.format(110+i),
-            'directory': directory
+            'directory': directory,
         })
     return output
