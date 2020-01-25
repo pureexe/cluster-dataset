@@ -70,7 +70,7 @@ For  `__init__`, you need to provide `executeable_name` which need to called whe
 
 For `upload` and `download`, You have to write how it will upload and download such as do authentication before download
 
-You can look into how write adapter at [rsync adapter](https://github.com/pureexe/cluster-dataset/blob/master/cluster_dataset/adapter/rsync.py)
+You can look into [rsync adapter](https://github.com/pureexe/cluster-dataset/blob/master/cluster_dataset/adapter/rsync.py) to understand how to write adapter.
 
 ```python
 from cluster_dataset.adapter.remote_adapter import RemoteAdapter
