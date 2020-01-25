@@ -44,6 +44,8 @@ dataset = Dataset('tororo',CONFIG) # change totoro to your dataset naem
 path = dataset.get_path() # the cluster set will search every node then download to your pc and return path the dataset
 ```
 
+You can look into example usage at [example_get_totoro_dataset.py](https://github.com/pureexe/cluster-dataset/blob/master/examples/example_get_totoro_dataset.py)
+
 ## Pre-requirement for rsync and scp
 Please setup ssh key authentication in both local PC and nodes to make this python module working correctly.
 
