@@ -10,12 +10,12 @@ ip = socket.gethostbyname(hostname)
 config['nodes'].append({
     'hostname': hostname ,
     'address': ip,
-    'directory': 'dataset' # Path to store dataset in this pc
+    'directory': 'dataset', # Path to store dataset in this pc
     'adapter': 'scp' # If doesn't provide adpater type, It will pick rsync by default
 })
 
 #load dataset name totoro
-totoro_dataset = Dataset('totoro',config) 
+totoro_dataset = Dataset('totoro',config)
 
 #get path of dataset on this pc, if not exist it will automatic look up from node
 path = totoro_dataset.get_path()
