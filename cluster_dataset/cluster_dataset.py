@@ -28,10 +28,9 @@ class Dataset():
             self.__avaliable_adapter['rclone'] = rclone.Rclone
         if scp.Scp(None,None).avaliable():
             self.__avaliable_adapter['scp'] = scp.Scp
-    
+
     def add_adapter(self, name, adpater):
         self__avaliable_adapter[name] = adpater
-
 
     def get_adapter(self,node):
         if 'adapter' in node:
@@ -42,6 +41,7 @@ class Dataset():
             # currently we use rsync as default adapter
             if not 'rsync' in self.__avaliable_adapter:
                 raise RuntimeError('This PC doesn\'t support rsync adapter')
+            return self.__avaliable_adapter['rsync']
 
     def download(self, selected_node = None):
         is_downloaded = False
