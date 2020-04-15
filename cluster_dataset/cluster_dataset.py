@@ -74,15 +74,26 @@ class Dataset():
             if node['hostname'] != hostname:
                 adapter(node,self.__local_dir).upload(self.__dataset_name)
 
-def get_config(directory = '/data/cluster-dataset/'):
+def get_config(directory = '/data/cluster-dataset/', local_directory = None):
     """ Example config file for vll.ist """
     output = {'nodes':[]}
     hostname = 'v{:02d}.vll.ist'
     address = '10.204.100.{:d}'
+    hostnames = []
     for i in range(1,5):
+        hostnames.append(hostname)
         output['nodes'].append({
             'hostname': hostname.format(i),
             'address': address.format(110+i),
             'directory': directory,
+        })
+    # if this pc isn't member of VLL, add this pc with local path
+    hostname = socket.gethostname()
+    path_dir = local_directory if local_directory is not None else directory
+    if hostname not in hostnames:
+        output['nodes'].append({
+            'hostname': hostname.format(i),
+            'address': socket.gethostbyname(hostname),
+            'directory': path_dir,
         })
     return output

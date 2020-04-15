@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="cluster-dataset",
-    version="0.1.0",
+    version="0.1.1",
     author="Pakkapon Phongthawee",
     author_email="pakkapon.p_s19@vistec.ac.th",
     description="annoy to copy data from your computer to a lot of computing engines when you are doing data science? try cluster-dataset",
