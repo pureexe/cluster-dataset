@@ -1,6 +1,5 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
 from shutil import which
-
 
 class RemoteAdapter(ABC):
     def __init__(self,executeable_name, node_info, local_dir):
@@ -18,7 +17,15 @@ class RemoteAdapter(ABC):
     def upload(self,path):
         """ upload to remote"""
         pass
-        
+    
+    def cache_timeout(self):
+        """
+        if folder exist. it's will download again if cache already timeout
+        -1 mean never timeout (do not redownload datast again)
+        other numbr is unit in seconds
+        """
+        return -1
+
     def avaliable(self):
         """ check if remote sync program (rclone/rsync/etc) avaliable on this pc"""
         return which(self.__executeable_name) is not None
@@ -34,4 +41,7 @@ class RemoteAdapter(ABC):
 
     def local_directory(self):
         return self.__local_dir
+    
+    def name(self):
+        return self.__executeable_name
 
