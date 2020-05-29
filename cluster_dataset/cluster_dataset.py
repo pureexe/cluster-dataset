@@ -155,7 +155,7 @@ def get_config(directory = '/data/cluster-dataset/', local_directory = None):
     pc_hostname = socket.gethostname()
     in_vll = pc_hostname in hostnames
     addresses = address_public
-    if in_vll:
+    if in_vll and pc_hostname != 'v04.vll.ist': #temporary disable on v4
         addresses = address_private
 
     for i in range(len(addresses)):
