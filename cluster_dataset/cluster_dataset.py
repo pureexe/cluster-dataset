@@ -8,12 +8,21 @@ class Dataset():
         self.__dataset_name = dataset_name
         self.__nodes = configuration['nodes']
         self.__avaliable_adapter = {}
+        self.__conn_db = None
         self.find_local_directory()
         if not os.path.exists(self.__local_dir):
             os.mkdir(self.__local_dir)
         self.check_avalible_adapter()
+        self.connect_database()
+
+    def __del__(self):
+        self.close_database()
+
+    def connect_database(self):
+        if self.__conn_db is not None:
+            return self.__conn_db
         self.__conn_db = sqlite3.connect(
-            os.path.join(tempfile.gettempdir(),'cluster_dataset.db'),
+            os.path.join(tempfile.gettempdir(),'cluster_dataset_20200601.db'),
             detect_types=sqlite3.PARSE_DECLTYPES
         )
         c = self.__conn_db.cursor()
@@ -26,9 +35,16 @@ class Dataset():
             )
         ''')
         self.__conn_db.commit()
+        return self.__conn_db
 
-    def __del__(self):
-        self.__conn_db.close()
+    def close_database(self):
+        if self.__conn_db is not None:
+            self.__conn_db.close()
+    
+    def get_db_cursor(self):
+        if self.__conn_db is None:
+            self.connect_database()
+        return self.__conn_db.cursor()
 
     def find_local_directory(self):
         self.__local_dir = None
@@ -65,7 +81,7 @@ class Dataset():
         timeout = adapter.cache_timeout()
         if timeout == -1:
             return True
-        c = self.__conn_db.cursor()
+        c = self.get_db_cursor()
         c.execute('''
             SELECT updated_at FROM cache_record WHERE address=? AND path=? ORDER BY id DESC LIMIT 1
         ''', (adapter.address(), local_dir))
@@ -76,7 +92,7 @@ class Dataset():
         return diff_time.total_seconds() < timeout 
 
     def set_node_cache(self,adapter, local_dir):
-        c = self.__conn_db.cursor()
+        c = self.get_db_cursor()
         c.execute('''
             INSERT INTO cache_record (address, path, updated_at) VALUES (?,?,?)
         ''',(adapter.address(), local_dir, datetime.now()))
@@ -96,6 +112,7 @@ class Dataset():
                 self.set_node_cache(adapter_obj, local_dir)
             if is_downloaded or cache_hit:
                 break
+        self.close_database() #close database imediately after
         if not is_downloaded and not os.path.exists(local_dir):
             raise RuntimeError('target dataset doesn\'t exist on {} node'.format(plural))
 
