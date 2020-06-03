@@ -1,5 +1,5 @@
 from .adapter import rclone, rsync, scp
-import socket, os, tempfile, sqlite3
+import socket, os, tempfile, sqlite3, getpass, warnings
 from datetime import datetime
 
 class Dataset():
@@ -21,8 +21,13 @@ class Dataset():
     def connect_database(self):
         if self.__conn_db is not None:
             return self.__conn_db
+        # use 1 database per user to prevent conflict
+        database_path = os.path.join(
+            tempfile.gettempdir(),
+            'cluster_dataset_{}.db'.format(getpass.getuser())
+        )
         self.__conn_db = sqlite3.connect(
-            os.path.join(tempfile.gettempdir(),'cluster_dataset_20200601.db'),
+            database_path,
             detect_types=sqlite3.PARSE_DECLTYPES
         )
         c = self.__conn_db.cursor()
@@ -105,11 +110,14 @@ class Dataset():
         local_dir = os.path.join(self.__local_dir,self.__dataset_name)
         for node in self.__nodes:
             adapter = self.get_adapter(node)
-            adapter_obj = adapter(node,self.__local_dir)
+            adapter_obj = adapter(node, self.__local_dir)
             cache_hit = self.is_node_cached(adapter_obj, local_dir)
             if not os.path.exists(local_dir) or not cache_hit:
                 is_downloaded = adapter_obj.download(self.__dataset_name)
-                self.set_node_cache(adapter_obj, local_dir)
+                try:
+                    self.set_node_cache(adapter_obj, local_dir)
+                except:
+                    warnings.warn("Cannot wriet database file, please look into permission setting")
             if is_downloaded or cache_hit:
                 break
         self.close_database() #close database imediately after
